@@ -29,6 +29,7 @@ pipeline {
         sh 'npm run-script build'
         sh 'rm -rf node_modules'
         sh 'yarn install --prod'
+      }
     }
     stage ('Publish') {
       when {
