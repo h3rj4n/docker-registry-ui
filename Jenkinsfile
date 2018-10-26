@@ -36,10 +36,12 @@ pipeline {
         branch 'master'
       }
       steps {
-        docker.withRegistry('http://192.168.178.12:5000') {
-          def customImage = docker.build('$IMAGE_NAME:${env.BUILD_ID}')
+        script {
+          docker.withRegistry('http://192.168.178.12:5000') {
+            def customImage = docker.build('$IMAGE_NAME:${env.BUILD_ID}')
 
-          customImage.push()
+            customImage.push()
+          }
         }
       }
     }
