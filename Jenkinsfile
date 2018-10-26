@@ -35,9 +35,7 @@ pipeline {
       when {
         branch 'master'
       }
-      node {
-        checkout scm
-
+      steps {
         docker.withRegistry('http://192.168.178.12:5000') {
           def customImage = docker.build('$IMAGE_NAME:${env.BUILD_ID}')
 
@@ -45,9 +43,6 @@ pipeline {
         }
       }
     }
-  }
-  triggers {
-    bitbucketPush()
   }
   post {
     success {
