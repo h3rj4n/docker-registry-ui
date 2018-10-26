@@ -46,19 +46,6 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      juxtapose event: 'success'
-      sh 'figlet "SUCCESS"'
-    }
-    failure {
-      juxtapose event: 'failure'
-      sh 'figlet "FAILURE"'
-    }
-    always {
-      sh 'docker rmi  $TEMP_IMAGE_NAME'
-    }
-  }
 }
 
 def getPackageVersion() {
