@@ -6,13 +6,12 @@ pipeline {
   agent {
     docker {
       image 'arm64v8/node:alpine'
-      args '-v $WORKSPACE:/srv/app -w /srv/app'
+      args '-v $WORKSPACE:/srv/app -w /srv/app -u 0'
     }
   }
   environment {
     IMAGE_NAME      = "registry-ui"
     TEMP_IMAGE_NAME = "registry-ui-build_${BUILD_NUMBER}"
-    TAG_VERSION     = getPackageVersion()
   }
   stages {
     stage ('Prepare') {
@@ -46,9 +45,4 @@ pipeline {
       }
     }
   }
-}
-
-def getPackageVersion() {
-  ver = sh(script: 'docker run --rm -v $(pwd):/data $DOCKER_CI_TOOLS bash -c "cat /data/package.json|jq -r \'.version\'"', returnStdout: true)
-  return ver.trim()
 }
